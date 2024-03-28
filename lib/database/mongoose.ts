@@ -18,16 +18,14 @@ if (!cached) {
 
 export const connectToDatabase = async () => {
   if (cached.conn) return cached.conn;
-
-  if (!MONGODB_URL) throw new Error("Please add your Mongo URI to .env.local");
+  if (!MONGODB_URL) throw new Error("Missing the mongodbURl");
 
   cached.promise =
     cached.promise ||
     mongoose.connect(MONGODB_URL, {
-      dbName: "next-application_database",
+      dbName: "next-app",
       bufferCommands: false,
     });
-  cached.conn = await cached.promise;
-
+  cached.conn = await cached.promise; //awaiting the promise
   return cached.conn;
 };
